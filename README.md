@@ -7,6 +7,9 @@ A comprehensive analysis of IVF treatment data was conducted to explore key fact
 
 The project’s ultimate goal is to provide healthcare professionals with a robust tool that not only predicts treatment outcomes but also helps refine treatment strategies, improve patient satisfaction, and maximize success rates.
 
+**Note:**
+I had to restart a new repo without history due to the size of the original repo so I could deploy the project. To refer to the commit history, please go to my [original repo](https://github.com/pswhdev/ivf-success-predictor)
+
 The deployed project can be accessed [here]()
 
 ## Table of contents
@@ -23,17 +26,17 @@ The deployed project can be accessed [here]()
   - [Dashboard Design](#dashboard-design)
     - [Page 1: Quick Project Summary](#page-1-quick-project-summary)
     - [Page 2: Exploratory Analysis of IVF Treatment Data Page](#page-2-exploratory-analysis-of-ivf-treatment-data-page)
-    - [Page 3: Prospect IVF Success Predictor](#page-3-prospect-ivf-success-predictor)
-    - [Page 4: Project Hypothesis and Validation](#page-4-project-hypothesis-and-validation)
-    - [Page 5: Predict Treatment Success](#page-5-predict-treatment-success)
+    - [Page 3: Project Hypothesis and Validation](#page-3-project-hypothesis-and-validation)
+    - [Page 4: IVF Success Predictor](#page-4-ivf-success-predictor)
+    - [Page 5: ML Success Predictor](#page-5-ml-success-predictor)
   - [Unfixed Bugs](#unfixed-bugs)
+  - [The Dataset and the Models](#the-dataset-and-the-models)
+  - [Conclusions](#conclusions)
   - [Deployment](#deployment)
     - [Heroku](#heroku)
   - [Main Data Analysis and Machine Learning Libraries](#main-data-analysis-and-machine-learning-libraries)
   - [Credits](#credits)
-    - [Content](#content)
-    - [Media](#media)
-  - [Acknowledgements (optional)](#acknowledgements-optional)
+  - [Acknowledgements](#acknowledgements)
 
 
 ## Dataset Content
@@ -259,71 +262,159 @@ This page provides an interactive dashboard for exploring IVF treatment data to 
 The dashboard includes data visualizations to highlight relationships between clinical variables and IVF outcomes, assisting in data-driven decision-making.
 
 **Introduction and Data Inspection:**
-  - The page introduces users to the exploratory analysis, highlighting its importance in understanding factors influencing IVF success rates.
-   - Users can inspect the dataset, which contains various clinical variables, by selecting an option to view the first 10 rows of data.
+- The page introduces users to the exploratory analysis, highlighting its importance in understanding factors influencing IVF success rates.
+- Users can inspect the dataset, which contains various clinical variables, by selecting an option to view the first 10 rows of data.
 
 **Correlation Study Summary:**
-   - The results of a correlation study is presented, showing how different variables are associated with successful treatment outcomes.
+- The results of a correlation study is presented, showing how different variables are associated with successful treatment outcomes.
 
 **Data Visualization Options:**
-   - Users can select from various clinical variables to explore through visualizations such as count distributions and pie charts.
-   - A special "Parallel Plot" option allows visualization of complex relationships between multiple factors and treatment outcomes.
+- Users can select from various clinical variables to explore through visualizations such as count distributions and pie charts.
+- A special "Parallel Plot" option allows visualization of complex relationships between multiple factors and treatment outcomes.
 
-### Page 3: Prospect IVF Success Predictor
-
-
-
-### Page 4: Project Hypothesis and Validation
+### Page 3: Project Hypothesis and Validation
 
 This page explores the hypotheses regarding factors influencing IVF treatment success rates, using data analysis and visualization to validate or refute each hypothesis.
 
-### Page 5: Predict Treatment Success
+### Page 4: IVF Success Predictor
 
-- Considerations and conclusions after the pipeline is trained
-- Present ML pipeline steps
-- Feature importance
-- Pipeline performance
+The live predictor page designed for live prediction of IVF treatment success. It allows users to input patient-specific data through interactive widgets, which are then processed by a pre-trained machine learning model. The page loads necessary models and feature engineering pipelines, displays a user-friendly interface for data entry, and triggers a prediction analysis to assess the likelihood of IVF success.
+
+### Page 5: ML Success Predictor
+
+Evaluates and showcases the performance of an IVF success prediction model. The page presents the complete machine learning pipelines, including data cleaning, feature engineering, and modeling. It highlights feature importance and provides a detailed summary of the model's predictive performance.
 
 ---
 
 ## Unfixed Bugs
 
-* No unfixed bugs
+No known unfixed bugs
+
+## The Dataset and the Models
+
+Despite intensive efforts in data cleaning, the dataset, although large, lacks sufficient predictive power to develop a model that provides reliable predictions.
+
+Various combinations of imbalance handling and hyperparameter tuning were tested, with the main results summarized in this [table](TESTS.md). The hyperparameter values (when not standard) were chosen to accommodate large datasets and minimize overfitting. Training set results marked with an "X" indicate that values were not recorded at the time. Tests with standard hyperparameters were conducted to evaluate model performance across different imbalance handling strategies: Oversampling (SMOTE), Undersampling (RandomUnderSampler), and a custom strategy described in a published study by Peng et al. (2022), "Predicting live birth in in vitro fertilization: A machine learning-based clinical prediction model using 57,558 cycles" (Frontiers in Endocrinology, 13, 838087, [DOI link](https://doi.org/10.3389/fendo.2022.838087)).
+
+The custom strategy involved dividing the dataset into three sub-datasets, each maintaining a balanced ratio of positive to negative samples. Each sub-dataset included all positive samples and one-third of the negative samples. Decision Tree (DT) and Linear Discriminant (LD) models were used to pre-train these sub-datasets, evaluating key metrics like precision, recall, and F1 score. The sub-dataset with the best metrics was then selected for final model training. This approach aimed to address class imbalance without the drawbacks of traditional methods, such as information loss from undersampling or overfitting from oversampling. However, the paper did not specify whether the reported results were from training or test sets, nor did it detail hyperparameter tuning methods. Since this approach did not outperform conventional methods, it was not adopted for this project.
+
+As shown in the table, performance differences between the Random Forest Classifier and Gradient Boosting Classifier were not significant, even when comparing standard and custom hyperparameter values. The best accuracy (0.71) was observed using imbalanced data without any imbalance handling strategy, where the model predominantly predicted "No Success." This led to an extremely low recall for success and a drastic drop in F1 Score to 0.04.
+
+A deep learning model using Neural Networks (TensorFlow's Sequential) was successfully developed, validating observations from ensemble models. Performance graphs for the DL model indicate balanced learning without overfitting or underfitting, as shown in the images below.
+
+**Accuracy plot DL:**
+
+![Accuracy plot DL](documentation/accuracy_plot_dl.png)
+
+**Loss plot DL:**
+
+![Loss plot DL](documentation/loss_plot_dl.png)
+
+The DL model slightly outperformed the conventional GradientBoostingClassifier on the training set, achieving a mean F1 Score of 0.74 compared to 0.62 with the GradientBoostingClassifier. However, the DL model's performance dropped significantly on the test set, with a mean F1 Score of 0.58, approaching the 0.55 score of the GradientBoostingClassifier. The DL model achieved an accuracy of 0.64 on the test set, compared to 0.55 for the GradientBoostingClassifier. Despite the DL model's slightly better performance, the conventional ML model was chosen for the dashboard due to the complexity and number of widgets required for predictions with the DL model.
+
+A clustering model was also developed, but it revealed that the data does not form well-defined clusters, making it ineffective for identifying correlations between conditions and IVF success.
+
+Silhouette analysis showed an average Silhouette Score of approximately 0.15, indicating a lack of well-defined clusters, as values close to zero suggest poor clustering structure. Some points even had negative Silhouette Scores, indicating they were incorrectly assigned to clusters.
+
+**Silhouette Analysis:**
+
+![Silhouette Analysis](documentation/silhouette_analysis.png)
+
+This lack of separation is clearly evident in the 2D and 3D plots, which show that the data points do not form distinct clusters, further demonstrating the challenges in identifying meaningful patterns related to IVF success.
+
+**2D Cluster Plot**
+![2D Plot](documentation/two_d_cluster.png)
+
+**3D Cluster Plot**
+![3D Plot](documentation/three_d_cluster.png)
+
+Furthermore, the groups formed by associating the clusters with "Live birth occurrence" were not meaningful, underscoring the poor separation and the inability of the clustering approach to provide valuable insights into IVF success.
+
+**Clusters groups**
+![Clusters groups](documentation/clusters_groups.png)
+
+## Conclusions
+
+Three models were developed to predict the chances of success in IVF treatment. Despite being a large dataset with valuable data for statistical analysis, it does not provide strong predictive information for IVF success. This is evidenced by low correlation values observed during the analysis, showing very weak correlations between 'Live birth occurrence' and other variables.
+
+The highest correlations observed were a negative value of -0.23 for "Embryos transferred_0" (indicating no embryos were transferred) and a positive value of 0.16 for "Date of embryo transfer_5 - fresh" (indicating the embryo was transferred on the 5th day of a fresh cycle).
+
+All models developed on this project demonstrated that using the entire dataset to predict IVF success is unrealistic, and the predictions are unreliable. A potential approach could be to split the dataset to address more specific questions, which would require further investigation.
 
 ## Deployment
+
 ### Heroku
 
 * The App live link is: https://YOUR_APP_NAME.herokuapp.com/ 
+
 * Set the runtime.txt Python version to a [Heroku-20](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack currently supported version.
-* The project was deployed to Heroku using the following steps.
 
-1. Log in to Heroku and create an App
-2. At the Deploy tab, select GitHub as the deployment method.
-3. Select your repository name and click Search. Once it is found, click Connect.
-4. Select the branch you want to deploy, then click Deploy Branch.
-5. The deployment process should happen smoothly if all deployment files are fully functional. Click now the button Open App on the top of the page to access your App.
+* Steps to deploy an application on Heroku:
 
+  * Create an App on Heroku: Log in to your Heroku account at heroku.com, click on "New," and select "Create new app."  * Choose a name for your app and select the appropriate region.
+  
+  * Select Deployment Method: Go to the Deploy tab in your newly created app.
+  
+  * Connect to GitHub: Under Deployment Method, select GitHub. Link your GitHub account to Heroku if not already connected.
+  
+  * Find and Connect Your Repository: Enter your repository name in the search bar, locate it, and click Connect.
+  
+  * Deploy a Branch: Choose the branch you want to deploy (commonly main or master) and click Deploy Branch. This will  * trigger the deployment process.
+  
+  * Access Your Application: Once the deployment is successful, click the Open App button at the top to view your live  * application.
+  
+  * Note: Ensure your deployment files, such as Procfile and requirements.txt, are correctly configured to ensure a smooth deployment process.
 
 ## Main Data Analysis and Machine Learning Libraries
-* Here you should list the libraries you used in the project and provide an example(s) of how you used these libraries.
+
+Libraries and usage are listed below:
+
+* pandas: Data manipulation, reading, and saving datasets.
+
+* numpy: Numerical operations.
+
+* matplotlib.pyplot: Data visualization, such as feature importance plots.
+
+* seaborn: Data visualization, especially for plots and data exploration.
+
+* scipy.stats: Statistical functions used for data analysis.
+
+* plotly.express: Interactive plots for data visualization.
+
+* plotly.graph_objects: Detailed customization of Plotly plots.
+
+* joblib: Saving and loading machine learning models efficiently.
+
+* gzip: Handling compressed files.
+
+* re: Regular expressions for string manipulation and data cleaning.
+
+* feature_engine: Feature engineering with modules like encoding, imputation, outliers, selection, and transformation.
+
+* imblearn.under_sampling (RandomUnderSampler): Addressing class imbalance by generating synthetic samples.
+
+* sklearn: Comprehensive ML toolkit with submodules  for various tasks, including data preprocessing, model building, evaluation, and feature selection.
+
+* tensorflow: Building and training deep learning model.
+
+* ydata_profiling: Automated data profiling for exploratory data analysis.
+
+* yellowbrick.cluster: Clustering visualizations such as KElbowVisualizer and SilhouetteVisualizer.
+
+* ppscore: Predictive Power Score for feature relevance analysis.
 
 
 ## Credits 
 
-* In this section, you need to reference where you got your content, media and extra help from. It is common practice to use code from other repositories and tutorials, however, it is important to be very specific about these sources to avoid plagiarism.
-* You can break the credits section up into Content and Media, depending on what you have included in your project.
+This project was inspired by the walkthrough project 'Churnometer' from Code Institute.
 
-### Content 
+The business case is fictional and was created specifically for this portfolio project with assistance from AI, specifically OpenAI's ChatGPT.
 
-- The Business Case is ficticious and was created with the help from AI, more specifically OpenAI ChatGPT.
-- 
+## Acknowledgements
 
-### Media
+I would like to thank my Cohort Facilitator, Kristyna Wach, and my fellow Code Institute students for all their support.
 
-- 
+Precious Ijege, my mentor, for providing his support and guidance.
 
-
-
-## Acknowledgements (optional)
-* Thank the people that provided support through this project.
+A heartfelt thank you to my husband for his unwavering support and motivation.
 
