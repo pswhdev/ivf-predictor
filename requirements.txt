@@ -7,3 +7,4 @@ Requests==2.32.3
 scikit_learn==1.5.1
 seaborn==0.13.2
 streamlit==1.38.0
+feature_engine==1.8.0
