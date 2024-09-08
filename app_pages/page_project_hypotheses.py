@@ -23,7 +23,6 @@ def page_project_hypotheses_body():
         "Partner/Sperm provider age",
     ]
 
-        
     st.markdown(
         """
         ### Project Hypotheses and Validation
@@ -80,19 +79,26 @@ def page_project_hypotheses_body():
         """
     )
 
-# Create a filtered DataFrame based on vars_to_study
+    # Create a filtered DataFrame based on vars_to_study
     df_eda = df.filter(vars_to_study + ["Live birth occurrence"])
-    
+
     # Checkbox to display the radio buttons for data visualization
-    if st.checkbox("Visualize Data"):
+    if st.checkbox("Visualize Data", value=False):
         # Select a variable for exploration
-        selected_variable = st.radio("Select a variable to explore:", vars_to_study, index=0)
+        selected_variable = st.radio(
+            "Select a variable to explore:",
+            vars_to_study, index=0
+        )
         # Display plots based on selected variable
         st.write(f"### Plots for: {selected_variable}")
-        display_selected_plots(df_eda, selected_variable, "Live birth occurrence")
+        display_selected_plots(
+            df_eda, selected_variable, "Live birth occurrence"
+            )
+
 
 def display_selected_plots(df, col, target_var):
-    """Displays count, proportion, and pie charts based on the selected column."""
+    """Displays count, proportion, and pie charts based
+    on the selected column."""
     # Count distribution plot
     st.write(f"**Count Distribution for {col}**")
     plot_count_distribution(df, col, target_var)
@@ -104,6 +110,7 @@ def display_selected_plots(df, col, target_var):
     # Pie chart
     st.write(f"**Pie Chart for {col}**")
     plot_pie_chart(df, col, target_var)
+
 
 def plot_count_distribution(df, col, target_var):
     plt.figure(figsize=(15, 6))
@@ -141,13 +148,16 @@ def plot_proportion_distribution(df, col, target_var):
 
     # Pivot the data to have proportions for each target
     # variable as separate columns
-    df_pivot = df_prop.pivot(index=col, columns=target_var, values="proportion").fillna(
+    df_pivot = df_prop.pivot(
+        index=col, columns=target_var, values="proportion"
+        ).fillna(
         0
     )
     df_pivot = df_pivot.reindex(
         # Reorder according to the predefined order
-        order, fill_value=0
-    )  
+        order,
+        fill_value=0,
+    )
 
     # Plot using Matplotlib to stack bars
     if not df_pivot.empty:
@@ -169,7 +179,11 @@ def plot_proportion_distribution(df, col, target_var):
     # Format y-axis as percentages
     plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(1.0))
     plt.xticks(rotation=90)
-    plt.title(f"Proportional Distribution of {col} by {target_var}", fontsize=20, y=1.05)
+    plt.title(
+        f"Proportional Distribution of {col} by {target_var}",
+        fontsize=20,
+        y=1.05
+    )
     plt.ylabel(f"Proportional Percentage of Outcomes by {col}")
     plt.xlabel(col)
     plt.legend(title=target_var, loc="upper right")
@@ -240,13 +254,14 @@ def plot_pie_chart(df, col, target_var):
     else:
         colors = palette
     # Plot pie chart for successful cases
-    plt.figure(figsize=(15, 6)) 
+    plt.figure(figsize=(15, 6))
     wedges, texts, autotexts = plt.pie(
         df_pie["count"],
         startangle=90,
         colors=colors,
         labels=[
-            label if pct > threshold else "" for label, pct in zip(df_pie[col], df_pie["percentage"])
+            label if pct > threshold else ""
+            for label, pct in zip(df_pie[col], df_pie["percentage"])
         ],
         autopct=lambda p: f"{p:.1f}%" if p / 100 > threshold else "",
     )
@@ -262,8 +277,9 @@ def plot_pie_chart(df, col, target_var):
         title=col,
         loc="center left",
         # Move the legend outside the plot area
-        bbox_to_anchor=(1.05, 0.5)
+        bbox_to_anchor=(1.05, 0.5),
     )
 
-    plt.title(f"Distribution of {col} in Successful IVF Cases", fontsize=20, y=1.05)
+    plt.title(f"Distribution of {col} in Successful IVF Cases",
+              fontsize=20, y=1.05)
     st.pyplot(plt.gcf())

@@ -1,4 +1,3 @@
-
 # IVF Success Predictor
 
 This project was developed to create a machine learning model that predicts the success of IVF (In Vitro Fertilization) treatments based on historical patient data. With infertility affecting millions worldwide, the need for personalized and accurate treatment predictions is addressed through data-driven insights. The project aims to assist Hope Fertility Clinic in enhancing treatment success rates, optimizing patient care, and providing tailored recommendations.
@@ -10,9 +9,10 @@ The project’s ultimate goal is to provide healthcare professionals with a robu
 **Note:**
 I had to restart a new repo without history due to the size of the original repo so I could deploy the project. To refer to the commit history, please go to my [original repo](https://github.com/pswhdev/ivf-success-predictor)
 
-The deployed project can be accessed [here]()
+The deployed project can be accessed [here](https://ivf-predictor-2a5c65ec6df4.herokuapp.com/)
 
 ## Table of contents
+
 - [IVF Success Predictor](#ivf-success-predictor)
   - [Table of contents](#table-of-contents)
   - [Dataset Content](#dataset-content)
@@ -38,7 +38,6 @@ The deployed project can be accessed [here]()
   - [Credits](#credits)
   - [Acknowledgements](#acknowledgements)
 
-
 ## Dataset Content
 
 The dataset was retrieved from the [Human Fertilization and Emblriology Authority - HFEA website](https://www.hfea.gov.uk/about-us/data-research/).
@@ -46,7 +45,6 @@ The dataset was retrieved from the [Human Fertilization and Emblriology Authorit
 The dataset includes information collected during fertility treatment cycles about patient and partner characteristics, treatment details, infertility causes, and outcomes related to pregnancy and live births.
 
 The variables are summarized on the table below, where each row represents a specific variable relevant to fertility treatment cycles and the type of data and Description according to the [HEFA's Guide to anonymised register](https://www.hfea.gov.uk/media/2682/guide-to-the-anonymised-register.pdf).
-
 
 | Field                                             | Data Type | Description                                                                                                                                                                                                                                                                                                                       |
 | ------------------------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -117,27 +115,16 @@ The variables are summarized on the table below, where each row represents a spe
 ## Project Terms & Jargon
 
 - **IVF(In Vitro Fertilization)** is a medical procedure where an egg is fertilized by sperm outside the body, with the resulting embryo being implanted into the uterus.
-  
 - **Embryo** is the early developmental stage formed after an egg is fertilized by sperm, before implantation in the uterus.
-  
 - A **patient** is an individual undergoing IVF fertility treatment.
-  
 - **Number of Previous IVF/DI Cycles**: The total number of IVF or donor insemination cycles the patient has previously undergone.
-  
 - **Elective Single Embryo Transfer (eSET)** is a process where only one embryo is selected for transfer to reduce the risk of multiple pregnancies.
-  
 - **Specific Treatment Type** is the exact fertility treatment protocol used, such as ICSI (Intracytoplasmic Sperm Injection), FET (Frozen Embryo Transfer), or standard IVF.
-  
 - **Ovarian Stimulation** is a process where medication is used to induce the ovaries to produce multiple eggs in a single cycle.
-  
 - **Fresh vs. Frozen Cycle**: A fresh cycle refers to the use of embryos from the current stimulation cycle, while a frozen cycle uses embryos that were frozen from a previous cycle.
-  
 - **PGT-M and PGT-A (Preimplantation Genetic Testing)**: Genetic tests performed on embryos to identify genetic abnormalities before transfer. PGT-M is for monogenic disorders, and PGT-A is for aneuploidy (chromosome abnormalities).
-  
 - **Endometriosis** is a condition where tissue similar to the lining of the uterus grows outside the uterus, potentially affecting fertility.
-  
 - **Sperm Quality** are attributes of sperm, including count, motility, and morphology, that affect the likelihood of successful fertilization.
-  
 - **Live Birth Occurrence** is the successful delivery of a living baby following an IVF cycle.
 
 ---
@@ -195,20 +182,24 @@ A dashboard will be developed to allow users to visualize the data and interact 
 - Model Success Metrics and Rationale:
 
   - **Accuracy (≥ 70%)**:
+
     - Accuracy provides a general overview of the model’s performance, indicating how often the model correctly predicts treatment outcomes. A threshold of 70% was set to ensure the model’s predictions are significantly better than random guessing (50%). This level of accuracy is considered a baseline for the model to be deemed reliable and actionable in clinical use.
-  
+
   - **Recall for "No Success" (≥ 70%) on Training and Test Sets**:
+
     - High recall for "No Success" minimizes the risk of false negatives—cases where the model incorrectly predicts success when the outcome is actually no success. This is critical in a clinical setting to prevent misplaced optimism and ensure appropriate adjustments to treatment plans. A threshold of 70% ensures that most unsuccessful treatments are identified, allowing for better management of patient expectations.
-  
+
   - **Precision for "Success" (≥ 70%)**:
+
     - High precision reduces false positives, where the model predicts success, but the treatment fails. In the context of IVF, this helps to prevent unnecessary costs, patient stress, and inappropriate adjustments to treatment protocols. A precision threshold of 70% ensures that when the model predicts success, it does so with a reasonable level of confidence, enhancing the trustworthiness of the predictions.
-  
+
   - **F1 Score (≥ 70%)**:
     - The F1 score is the harmonic mean of precision and recall, balancing the trade-off between false positives and false negatives. The F1 score is particularly valuable when dealing with imbalanced classes, as is common in medical data. A minimum threshold of 70% ensures that the model maintains a balanced performance between detecting successes and failures, making the model both accurate and clinically meaningful.
 
 These metrics ensure that the model not only performs well statistically but also provides meaningful and actionable insights for clinical decision-making at Hope Fertility Clinic. By focusing on these performance indicators, the model aims to support better treatment planning and patient management, ultimately leading to improved IVF outcomes.
 
 - Training Data:
+
   - The model was trained using data from the HEFA website for the years 2017-2018, containing approximately 150,000 records of IVF treatments.
 
 - Training Data Details:
@@ -262,13 +253,16 @@ This page provides an interactive dashboard for exploring IVF treatment data to 
 The dashboard includes data visualizations to highlight relationships between clinical variables and IVF outcomes, assisting in data-driven decision-making.
 
 **Introduction and Data Inspection:**
+
 - The page introduces users to the exploratory analysis, highlighting its importance in understanding factors influencing IVF success rates.
 - Users can inspect the dataset, which contains various clinical variables, by selecting an option to view the first 10 rows of data.
 
 **Correlation Study Summary:**
+
 - The results of a correlation study is presented, showing how different variables are associated with successful treatment outcomes.
 
 **Data Visualization Options:**
+
 - Users can select from various clinical variables to explore through visualizations such as count distributions and pie charts.
 - A special "Parallel Plot" option allows visualization of complex relationships between multiple factors and treatment outcomes.
 
@@ -345,64 +339,61 @@ All models developed on this project demonstrated that using the entire dataset 
 
 ### Heroku
 
-* The App live link is: https://YOUR_APP_NAME.herokuapp.com/ 
+- The App live link is can be seen [here](https://ivf-predictor-2a5c65ec6df4.herokuapp.com/)
 
-* Set the runtime.txt Python version to a [Heroku-20](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack currently supported version.
+- Steps to deploy an application on Heroku:
 
-* Steps to deploy an application on Heroku:
+  - Create an App on Heroku: Log in to your Heroku account at heroku.com, click on "New," and select "Create new app." \* Choose a name for your app and select the appropriate region.
 
-  * Create an App on Heroku: Log in to your Heroku account at heroku.com, click on "New," and select "Create new app."  * Choose a name for your app and select the appropriate region.
-  
-  * Select Deployment Method: Go to the Deploy tab in your newly created app.
-  
-  * Connect to GitHub: Under Deployment Method, select GitHub. Link your GitHub account to Heroku if not already connected.
-  
-  * Find and Connect Your Repository: Enter your repository name in the search bar, locate it, and click Connect.
-  
-  * Deploy a Branch: Choose the branch you want to deploy (commonly main or master) and click Deploy Branch. This will  * trigger the deployment process.
-  
-  * Access Your Application: Once the deployment is successful, click the Open App button at the top to view your live  * application.
-  
-  * Note: Ensure your deployment files, such as Procfile and requirements.txt, are correctly configured to ensure a smooth deployment process.
+  - Select Deployment Method: Go to the Deploy tab in your newly created app.
+
+  - Connect to GitHub: Under Deployment Method, select GitHub. Link your GitHub account to Heroku if not already connected.
+
+  - Find and Connect Your Repository: Enter your repository name in the search bar, locate it, and click Connect.
+
+  - Deploy a Branch: Choose the branch you want to deploy (commonly main or master) and click Deploy Branch. This will \* trigger the deployment process.
+
+  - Access Your Application: Once the deployment is successful, click the Open App button at the top to view your live \* application.
+
+  - Note: Ensure your deployment files, such as Procfile and requirements.txt, are correctly configured to ensure a smooth deployment process.
 
 ## Main Data Analysis and Machine Learning Libraries
 
 Libraries and usage are listed below:
 
-* pandas: Data manipulation, reading, and saving datasets.
+- pandas: Data manipulation, reading, and saving datasets.
 
-* numpy: Numerical operations.
+- numpy: Numerical operations.
 
-* matplotlib.pyplot: Data visualization, such as feature importance plots.
+- matplotlib.pyplot: Data visualization, such as feature importance plots.
 
-* seaborn: Data visualization, especially for plots and data exploration.
+- seaborn: Data visualization, especially for plots and data exploration.
 
-* scipy.stats: Statistical functions used for data analysis.
+- scipy.stats: Statistical functions used for data analysis.
 
-* plotly.express: Interactive plots for data visualization.
+- plotly.express: Interactive plots for data visualization.
 
-* plotly.graph_objects: Detailed customization of Plotly plots.
+- plotly.graph_objects: Detailed customization of Plotly plots.
 
-* joblib: Saving and loading machine learning models efficiently.
+- joblib: Saving and loading machine learning models efficiently.
 
-* gzip: Handling compressed files.
+- gzip: Handling compressed files.
 
-* feature_engine: Feature engineering with modules like encoding, imputation, outliers, selection, and transformation.
+- feature_engine: Feature engineering with modules like encoding, imputation, outliers, selection, and transformation.
 
-* imblearn.under_sampling (RandomUnderSampler): Addressing class imbalance by generating synthetic samples.
+- imblearn.under_sampling (RandomUnderSampler): Addressing class imbalance by generating synthetic samples.
 
-* sklearn: Comprehensive ML toolkit with submodules  for various tasks, including data preprocessing, model building, evaluation, and feature selection.
+- sklearn: Comprehensive ML toolkit with submodules for various tasks, including data preprocessing, model building, evaluation, and feature selection.
 
-* tensorflow: Building and training deep learning model.
+- tensorflow: Building and training deep learning model.
 
-* ydata_profiling: Automated data profiling for exploratory data analysis.
+- ydata_profiling: Automated data profiling for exploratory data analysis.
 
-* yellowbrick.cluster: Clustering visualizations such as KElbowVisualizer and SilhouetteVisualizer.
+- yellowbrick.cluster: Clustering visualizations such as KElbowVisualizer and SilhouetteVisualizer.
 
-* ppscore: Predictive Power Score for feature relevance analysis.
+- ppscore: Predictive Power Score for feature relevance analysis.
 
-
-## Credits 
+## Credits
 
 This project was inspired by the walkthrough project 'Churnometer' from Code Institute.
 
@@ -415,4 +406,3 @@ I would like to thank my Cohort Facilitator, Kristyna Wach, and my fellow Code I
 Precious Ijege, my mentor, for providing his support and guidance.
 
 A heartfelt thank you to my husband for his unwavering support and motivation.
-
