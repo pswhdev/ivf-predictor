@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from src.data_management import (
     load_ifv_treatment_data,
-    load_gzip_file,
+    load_pickle_file,
     load_best_features,
     load_ifv_treatment_data_before_cleaning
 )
@@ -24,14 +24,15 @@ def page_live_predictor_body():
     version = "v1"
 
     # Loads the pre-processing pipeline (feature engineering steps)
-    ml_pipe_fe = load_gzip_file(
+    ml_pipe_fe = load_pickle_file(
         f"outputs/ml_pipeline/ivf_success_predictor/{version}/"
-        "clf_pipeline_pre_processing.pkl.gz"
+        "clf_pipeline_pre_processing.pkl"
     )
     # Loads the trained classification model in gzipped format
-    ml_pipe_model = load_gzip_file(
+    # Loads the trained classification model (uncompressed format)
+    ml_pipe_model = load_pickle_file(
         f"outputs/ml_pipeline/ivf_success_predictor/{version}/"
-        "clf_pipeline_model.pkl.gz"
+        "clf_pipeline_model.pkl"
     )
     # Loads the list of best features used by the model
     best_features = load_best_features(version)
