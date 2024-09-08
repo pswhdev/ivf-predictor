@@ -12,6 +12,9 @@ def page_cluster_body():
     cluster_pipe = load_pickle_file(
         f"outputs/ml_pipeline/cluster_analysis/{version}/cluster_pipeline.pkl"
     )
+    best_features = pd.read_csv(
+        f"outputs/ml_pipeline/cluster_analysis/{version}/best_features_clusters.csv.gz"
+    )
     cluster_silhouette = plt.imread(
         f"outputs/ml_pipeline/cluster_analysis/{version}/" f"clusters_silhouette.png"
     )
@@ -59,10 +62,6 @@ def page_cluster_body():
     st.write("#### Clusters Silhouette Plot")
     st.image(cluster_silhouette)
 
-    cluster_distribution_per_variable(
-        df=df_success_vs_clusters, target="Live birth occurrence"
-    )
-
     st.write("#### Most important features to define a cluster")
     st.image(features_to_cluster)
 
@@ -81,49 +80,4 @@ def page_cluster_body():
     st.table(cluster_profile)
 
 
-# code taken from "07 - Modeling and Evaluation - Cluster Sklearn"
-# notebook - under "Cluster Analysis" section
-def cluster_distribution_per_variable(df, target):
 
-    df_bar_plot = df.value_counts(["Clusters", target]).reset_index()
-    df_bar_plot.columns = ["Clusters", target, "Count"]
-    if target in df_bar_plot.columns:
-        df_bar_plot[target] = df_bar_plot[target].astype("object")
-    else:
-        # Optional: handle the missing column gracefully, or proceed
-        # without changes
-        print(
-            f"Column '{target}' not found in df_bar_plot," " using the one that exists."
-        )
-
-    st.write(f"#### Clusters distribution across {target} levels")
-    fig = px.bar(
-        df_bar_plot, x="Clusters", y="Count", color=target, width=800, height=350
-    )
-    fig.update_layout(xaxis=dict(tickmode="array", tickvals=df["Clusters"].unique()))
-    # we replaced fig.show() for a streamlit command to render the plot
-    st.plotly_chart(fig)
-
-    df_relative = (
-        df.groupby(["Clusters", target])
-        .size()
-        .groupby(level=0)
-        .apply(lambda x: 100 * x / x.sum())
-        .reset_index()
-        .sort_values(by=["Clusters"])
-    )
-    df_relative.columns = ["Clusters", target, "Relative Percentage (%)"]
-
-    st.write(f"#### Relative Percentage (%) of {target} in each cluster")
-    fig = px.line(
-        df_relative,
-        x="Clusters",
-        y="Relative Percentage (%)",
-        color=target,
-        width=800,
-        height=350,
-    )
-    fig.update_layout(xaxis=dict(tickmode="array", tickvals=df["Clusters"].unique()))
-    fig.update_traces(mode="markers+lines")
-    # Replace fig.show() for a streamlit command to render the plot
-    st.plotly_chart(fig)

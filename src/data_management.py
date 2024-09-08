@@ -23,6 +23,7 @@ def load_ifv_treatment_data_before_cleaning():
     return df
 
 
+
 # Load a pickle file using joblib
 @st.cache_data
 def load_pickle_file(file_path):
