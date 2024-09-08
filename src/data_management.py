@@ -4,7 +4,6 @@ import joblib
 import gzip
 
 
-
 # Load IVF treatment data
 @st.cache_data
 def load_ifv_treatment_data():
@@ -13,6 +12,7 @@ def load_ifv_treatment_data():
         "outputs/datasets/cleaned/FertilityTreatmentDataCleaned.csv.gz"
         )
     return df
+
 
 @st.cache_data
 def load_ifv_treatment_data_before_cleaning():
@@ -23,19 +23,19 @@ def load_ifv_treatment_data_before_cleaning():
     return df
 
 
-
 # Load a pickle file using joblib
 @st.cache_data
-def load_pickle_file(file_path):
-    """Loads a regular pickle file using joblib."""
-    try:
-        with open(file_path, "rb") as f:
-            st.write(f"Loading file: {file_path}")
-            return joblib.load(f)
-    except Exception as e:
-        st.write(f"Error loading the file: {file_path}")
-        st.write(str(e))
-        raise
+def load_pkl_file(file_path):
+    """Loads a pickle file using joblib."""
+    return joblib.load(file_path)
+
+
+# Load a gzip-compressed pickle file using joblib
+@st.cache_data
+def load_gzip_file(file_path):
+    """Loads a gzip-compressed pickle file using joblib."""
+    with gzip.open(file_path, "rb") as f:
+        return joblib.load(f)
 
 
 def load_best_features(version="v1"):
