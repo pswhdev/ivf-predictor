@@ -399,6 +399,8 @@ This project was inspired by the walkthrough project 'Churnometer' from Code Ins
 
 The business case is fictional and was created specifically for this portfolio project with assistance from AI, specifically OpenAI's ChatGPT.
 
+Instructions on how to align the confusion matrix nicely on streamlit from [the streamlit site](https://discuss.streamlit.io/t/classification-score-visualization/48637/2).
+
 ## Acknowledgements
 
 I would like to thank my Cohort Facilitator, Kristyna Wach, and my fellow Code Institute students for all their support.
