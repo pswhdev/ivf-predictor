@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from src.data_management import (
     load_ifv_treatment_data,
-    load_gzip_file
+    load_pickle_file,
 )
 from src.machine_learning.evaluate_clf import clf_performance
 
@@ -12,19 +12,19 @@ def page_ml_success_predictor_body():
 
     version = "v1"
     # load needed files
-    ivf_pipe_dc = load_gzip_file(
+    ivf_pipe_dc = load_pickle_file(
         f"outputs/ivf_success_predictor/data_cleaning_pipeline/{version}/"
-        "data_cleaning_pipeline.pkl.gz"
+        "data_cleaning_pipeline.pkl"
     )
 
-    ivf_preprocessing = load_gzip_file(
+    ivf_preprocessing = load_pickle_file(
         f"outputs/ml_pipeline/ivf_success_predictor/{version}/"
-        "clf_pipeline_pre_processing.pkl.gz"
+        "clf_pipeline_pre_processing.pkl"
     )
 
-    ivf_pipe_model = load_gzip_file(
+    ivf_pipe_model = load_pickle_file(
         f"outputs/ml_pipeline/ivf_success_predictor/{version}/"
-        "clf_pipeline_model.pkl.gz"
+        "clf_pipeline_model.pkl"
     )
 
     ivf_feat_importance = plt.imread(

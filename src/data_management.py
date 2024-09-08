@@ -24,7 +24,7 @@ def load_ifv_treatment_data_before_cleaning():
 
 
 
-# Load a gzip-compressed pickle file using joblib
+# Load a pickle file using joblib
 @st.cache_data
 def load_pickle_file(file_path):
     """Loads a regular pickle file using joblib."""
