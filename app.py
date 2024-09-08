@@ -7,6 +7,7 @@ from app_pages.page_eda_ivf_treatment import page_eda_ivf_treatment_body
 from app_pages.page_project_hypotheses import page_project_hypotheses_body
 from app_pages.page_ml_success_predictor import page_ml_success_predictor_body
 from app_pages.page_live_predictor import page_live_predictor_body
+from app_pages.page_cluster import page_cluster_body
 
 # Create an instance of the app
 app = MultiPage(app_name="IVF Success Predictor")
@@ -19,6 +20,6 @@ app.add_page(
 app.add_page("Project Hypotheses", page_project_hypotheses_body)
 app.add_page("IVF Success Predictor", page_live_predictor_body)
 app.add_page("ML: Predict Success", page_ml_success_predictor_body)
-
+app.add_page("ML: Cluster", page_cluster_body)
 
 app.run()
