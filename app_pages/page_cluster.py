@@ -87,7 +87,14 @@ def cluster_distribution_per_variable(df, target):
 
     df_bar_plot = df.value_counts(["Clusters", target]).reset_index()
     df_bar_plot.columns = ["Clusters", target, "Count"]
-    df_bar_plot[target] = df_bar_plot[target].astype("object")
+    if target in df_bar_plot.columns:
+        df_bar_plot[target] = df_bar_plot[target].astype("object")
+    else:
+        # Optional: handle the missing column gracefully, or proceed
+        # without changes
+        print(
+            f"Column '{target}' not found in df_bar_plot," " using the one that exists."
+        )
 
     st.write(f"#### Clusters distribution across {target} levels")
     fig = px.bar(
