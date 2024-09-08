@@ -1,5 +1,4 @@
 jupyter_notebooks/
 venv/
-venv-311
 .*ipynb
 README.md
