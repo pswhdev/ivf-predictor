@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from src.data_management import (
     load_ifv_treatment_data,
-    load_pkl_file,
     load_gzip_file
 )
 from src.machine_learning.evaluate_clf import clf_performance
@@ -13,14 +12,14 @@ def page_ml_success_predictor_body():
 
     version = "v1"
     # load needed files
-    ivf_pipe_dc = load_pkl_file(
+    ivf_pipe_dc = load_gzip_file(
         f"outputs/ivf_success_predictor/data_cleaning_pipeline/{version}/"
-        "data_cleaning_pipeline.pkl"
+        "data_cleaning_pipeline.pkl.gz"
     )
 
-    ivf_preprocessing = load_pkl_file(
+    ivf_preprocessing = load_gzip_file(
         f"outputs/ml_pipeline/ivf_success_predictor/{version}/"
-        "clf_pipeline_pre_processing.pkl"
+        "clf_pipeline_pre_processing.pkl.gz"
     )
 
     ivf_pipe_model = load_gzip_file(
@@ -34,26 +33,26 @@ def page_ml_success_predictor_body():
     )
 
     X_train = pd.read_csv(
-        f"outputs/ml_pipeline/ivf_success_predictor/{version}/X_train.csv"
+        f"outputs/ml_pipeline/ivf_success_predictor/{version}/X_train.csv.gz"
     )
 
     X_test = pd.read_csv(
-        f"outputs/ml_pipeline/ivf_success_predictor/{version}/X_test.csv"
+        f"outputs/ml_pipeline/ivf_success_predictor/{version}/X_test.csv.gz"
     )
 
     y_train = pd.read_csv(
-        f"outputs/ml_pipeline/ivf_success_predictor/{version}/y_train.csv"
+        f"outputs/ml_pipeline/ivf_success_predictor/{version}/y_train.csv.gz"
     ).values
 
     y_test = pd.read_csv(
-        f"outputs/ml_pipeline/ivf_success_predictor/{version}/y_test.csv"
+        f"outputs/ml_pipeline/ivf_success_predictor/{version}/y_test.csv.gz"
     ).values
 
     st.write("### ML Pipeline: IVF Success Predictor")
     # display pipeline training summary conclusions
     st.info(
         """
-        * The pipeline was tuned to achieve a mean F1 score of at least 0.7.
+        * The pipeline was expected to achieve a mean F1 score of at least 0.7.
         This is crucial because the goal is to minimize the risk of
         providing false hope by predicting treatment success when there
         is a high chance of failure.
@@ -61,9 +60,8 @@ def page_ml_success_predictor_body():
         * However, due to the complexity of biological interactions that
         are not fully captured by the dataset, and the low predictive
         power of the variables as indicated by correlation analysis, the ML
-        model did not achieve the desired predictive performance. The model's
-        mean F1 Score is 0.74 on the training set but drops significantly to
-        0.57 on the test set.
+        model did not achieve the desired predictive performance with a mean
+        F1 Score of 0.62 on the training set and 0.55 on the test set.
         """
     )
 
@@ -81,14 +79,14 @@ def page_ml_success_predictor_body():
 
     st.write(
         """
-        The second is carries on further feature engineering tasks.
+        The second carries on further feature engineering tasks.
         """
     )
     st.write(ivf_preprocessing)
 
     st.write(
         """
-        The third one is the modelling pipeline.
+        The third one is the scaling and modelling pipeline.
         """
     )
     st.write(ivf_pipe_model)
@@ -97,7 +95,7 @@ def page_ml_success_predictor_body():
     st.write("---")
     st.write(
         """
-        The features the model was trained and their importance.
+        Features used in the model and their importance.
         """
     )
 

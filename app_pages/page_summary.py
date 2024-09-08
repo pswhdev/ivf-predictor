@@ -25,7 +25,9 @@ def page_summary_body():
     st.write(
         """
         * For additional information, please visit and **read** the [Project
-        README file](https://github.com/pswhdev/ivf-success-predictor/blob/main/README.md).
+        README file](
+        https://github.com/pswhdev/ivf-predictor/blob/main/README.md
+        ).
         """
     )
 

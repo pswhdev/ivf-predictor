@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from src.data_management import (
     load_ifv_treatment_data,
-    load_pkl_file,
     load_gzip_file,
     load_best_features,
     load_ifv_treatment_data_before_cleaning
@@ -25,9 +24,9 @@ def page_live_predictor_body():
     version = "v1"
 
     # Loads the pre-processing pipeline (feature engineering steps)
-    ml_pipe_fe = load_pkl_file(
+    ml_pipe_fe = load_gzip_file(
         f"outputs/ml_pipeline/ivf_success_predictor/{version}/"
-        "clf_pipeline_pre_processing.pkl"
+        "clf_pipeline_pre_processing.pkl.gz"
     )
     # Loads the trained classification model in gzipped format
     ml_pipe_model = load_gzip_file(
@@ -49,8 +48,8 @@ def page_live_predictor_body():
         
         This dashboard is designed for our staff to assess the likelihood
         of IVF treatment success based on patient-specific data.
-        Please enter the data and click on the button to run the predictive
-        analysis.
+        Please enter the relevant details and click the button to run the
+        predictive analysis.
         """
     )
     st.write("---")

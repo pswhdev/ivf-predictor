@@ -17,7 +17,8 @@ app.add_page(
     page_eda_ivf_treatment_body
     )
 app.add_page("Project Hypotheses", page_project_hypotheses_body)
-app.add_page("ML: Predict Success", page_ml_success_predictor_body)
 app.add_page("IVF Success Predictor", page_live_predictor_body)
+app.add_page("ML: Predict Success", page_ml_success_predictor_body)
+
 
 app.run()
