@@ -6,7 +6,7 @@ import gzip
 
 
 # Load IVF treatment data
-@st.cache_data
+# @st.cache_data
 def load_ifv_treatment_data():
     """Loads the cleaned IVF treatment data from a CSV file."""
     df = pd.read_csv(
@@ -14,7 +14,7 @@ def load_ifv_treatment_data():
         )
     return df
 
-@st.cache_data
+# @st.cache_data
 def load_ifv_treatment_data_before_cleaning():
     """Loads the IVF treatment data from a CSV file before cleaning."""
     df = pd.read_csv(
@@ -23,11 +23,15 @@ def load_ifv_treatment_data_before_cleaning():
     return df
 
 # Load a gzip-compressed pickle file using joblib
-@st.cache_data
+# @st.cache_data
 def load_gzip_file(file_path):
     """Loads a gzip-compressed pickle file using joblib."""
-    with gzip.open(file_path, "rb") as f:
-        return joblib.load(f)
+    try:
+        with gzip.open(file_path, "rb") as f:
+            return joblib.load(f)
+    except Exception as e:
+        print(f"Failed to load the file {file_path}: {e}")
+        raise
 
 
 def load_best_features(version="v1"):
