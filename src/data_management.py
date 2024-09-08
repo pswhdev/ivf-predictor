@@ -25,7 +25,7 @@ def load_ifv_treatment_data_before_cleaning():
 
 # Load a pickle file using joblib
 @st.cache_data
-def load_pkl_file(file_path):
+def load_pickle_file(file_path):
     """Loads a pickle file using joblib."""
     return joblib.load(file_path)
 
