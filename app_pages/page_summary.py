@@ -26,7 +26,7 @@ def page_summary_body():
         """
         * For additional information, please visit and **read** the [Project
         README file](
-        https://github.com/pswhdev/ivf-predictor/blob/main/README.md
+        https://github.com/pswhdev/ivf-predictor?tab=readme-ov-file#readme
         ).
         """
     )
