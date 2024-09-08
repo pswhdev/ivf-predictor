@@ -387,8 +387,6 @@ Libraries and usage are listed below:
 
 * gzip: Handling compressed files.
 
-* re: Regular expressions for string manipulation and data cleaning.
-
 * feature_engine: Feature engineering with modules like encoding, imputation, outliers, selection, and transformation.
 
 * imblearn.under_sampling (RandomUnderSampler): Addressing class imbalance by generating synthetic samples.
