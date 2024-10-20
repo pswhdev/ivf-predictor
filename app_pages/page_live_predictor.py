@@ -134,6 +134,17 @@ def DrawInputsWidgets():
                 )
                 cycle_info_displayed = True
 
+        # Display information about date of embryo transfer:
+        if feature == "Date of embryo transfer":
+            st.write(
+                """
+                * The date of embryo transfer refers to the number of days
+                between embryo transfer and the first date provided in the
+                series: egg collection date; egg thaw date; egg mix date;
+                embryo thaw date.
+                """
+            )
+
         # Create appropriate input widgets based on the data type
         # of the feature using Pandas API
         if pd.api.types.is_numeric_dtype(df[feature]):
